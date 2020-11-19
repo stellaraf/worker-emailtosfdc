@@ -1,5 +1,5 @@
 import querystring from 'querystring';
-import { parseEmailData } from './parse';
+import { parseEmailData, shouldForward } from './parse';
 
 import type { CloudMailin } from './types';
 
@@ -11,7 +11,20 @@ export async function submitData(
   userData: IUserData,
 ): Promise<Response> {
   // Destructure request JSON data & set defaults in case fields are not set.
-  const { body, ...emailData } = await parseEmailData(data);
+  const { body, subject, ...emailData } = await parseEmailData(data);
+
+  if (!shouldForward(subject)) {
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `Subject '${subject}' matches exclusion list, message not forwarded.`,
+      }),
+      {
+        status: 202,
+        headers: new Headers({ 'content-type': 'application/json' }),
+      },
+    );
+  }
 
   // Initialize multi-line string for case comments, to which User Data will be added.
   let caseComment = '';
@@ -29,6 +42,7 @@ export async function submitData(
     type: 'Request',
     description: body,
     ['00N3j00000FccHG']: caseComment,
+    subject,
     ...emailData,
   };
 

@@ -1,8 +1,21 @@
+import { dropSubjects } from './__static';
+
 import type { CloudMailin, EmailData } from './types';
 
 function parseSender(sender: string): [string, string] {
   const [name, email] = sender.split(/<|>/);
   return [name, email];
+}
+
+export function shouldForward(subject: string): boolean {
+  for (const line of dropSubjects) {
+    const pattern = new RegExp(line, 'g');
+    if (subject.match(pattern)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
 
 export async function parseEmailData(data: CloudMailin.Message): Promise<EmailData> {

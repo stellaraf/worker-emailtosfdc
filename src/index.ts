@@ -40,12 +40,16 @@ async function handleRequest(request: Request) {
     // Submit the data to SFDC.
     const submission = await submitData(data, userData);
 
-    if (submission.status !== 200) {
+    if (submission.status > 399) {
       // Handle an error response from SFDC.
       return new Response(JSON.stringify({ success: false, message: submission.statusText }), {
         status: submission.status,
         headers,
       });
+    }
+
+    if (submission.status === 202) {
+      return submission;
     }
 
     /**
