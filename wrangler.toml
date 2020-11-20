@@ -9,5 +9,6 @@ workers_dev = true
 zone_id = "7e9288b41202f31f23e7f6ef5754ba35"
 
 [env.production]
+kv_namespaces = [{binding = "EMAIL_TO_SFDC_ORG_MATCH", preview_id = "b1a1bf05e83c492ebe33e926d441ca88", id = "1bdff844b428466397567bbdb48d9e8a"}]
 route = "workers.stellar.tech/email-to-sfdc"
 vars = {ENVIRONMENT = "production"}
