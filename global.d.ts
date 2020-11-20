@@ -1,7 +1,3 @@
-declare namespace Cloudflare {
-  type WorkerKV = import('types-cloudflare-worker').CloudflareWorkerKV;
-}
-
 declare const AUTH_BASIC_USER: string;
 
 declare const AUTH_BASIC_PASSWORD: string;
@@ -12,7 +8,7 @@ declare const SFDC_ORG_ID: string;
 
 declare const ENVIRONMENT: 'production' | 'development';
 
-declare const EMAIL_TO_SFDC_ORG_MATCH: Cloudflare.WorkerKV;
+declare const EMAIL_TO_SFDC_ORG_MATCH: KVNamespace;
 
 type TCaseStatus =
   | 'New'

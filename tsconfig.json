@@ -4,7 +4,7 @@
     "module": "CommonJS",
     "outDir": "./dist",
     "lib": ["ES2020", "WebWorker"],
-    "types": ["@cloudflare/workers-types", "node", "types-cloudflare-worker"],
+    "types": ["@cloudflare/workers-types", "node"],
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "moduleResolution": "node",
